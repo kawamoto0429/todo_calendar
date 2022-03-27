@@ -32,7 +32,7 @@ export default function AuthScreen({navigation}) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <TouchableWithoutFeedback onPress={()=>console.log(3)}>
+      <TouchableWithoutFeedback onPress={()=>console.log(15)}>
       <>
       <View style={styles.h}>
         <Text style={styles.auth}>ログイン認証</Text>
