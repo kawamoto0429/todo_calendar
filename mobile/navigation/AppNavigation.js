@@ -78,10 +78,16 @@ const TodoStack = () => {
       <Stack.Screen 
         name="TodoCreate" 
         component={TodoCreateScreen} 
+        options={({route})=>({
+          title: "",
+        })}
       />
       <Stack.Screen 
         name="FolderCreate" 
         component={FolderCreateScreen} 
+        options={({route})=>({
+          title: "",
+        })}
       />
     </Stack.Navigator>
   )
@@ -96,6 +102,9 @@ const CalendarStack = () => {
       />
       <Stack.Screen name="planCreate"
        component={PlanCreateScreen}
+       options={({route})=>({
+        title: "",
+      })}
       />
       <Stack.Screen 
         name="planDetail" 
