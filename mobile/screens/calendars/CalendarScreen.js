@@ -9,7 +9,7 @@ import { PlanItem } from '../../components/PlanItem';
 export default function Calendario({ navigation }) {
   const {auth, onOff} = useContext(valueContext)
   const [dates, setDates] = useState("")
-  const [dateSelected, setDateSelected] = useState([])
+  const [dateSelected, setDateSelected] = useState({})
   const date = new Date()
   // const [refreshing, setRefreshing] = useState(false);
   // const wait = (timeout) => {
@@ -70,7 +70,9 @@ export default function Calendario({ navigation }) {
         maxDate={'2100-12-31'}
         onDayPress={day => {
           dayClick(day.dateString)
+          console.log(day.dateString)
           setDateSelected({[day.dateString]:{selected: true, selectedColor: '#466A8F'}})
+          console.log(dateSelected)
         }}
         monthFormat={'yyyy年 MM月'}
         enableSwipeMonths={true}
