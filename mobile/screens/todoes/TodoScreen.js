@@ -8,7 +8,7 @@ import axios from 'axios';
 const TodoScreen = ({ navigation }) => {
   const {folders, auth, onOff,setOnOff} = useContext(valueContext)
   const deleteClick = (id) => {
-    axios.delete(`http://localhost:3000/api/v1/folders/${id}`,{
+    axios.delete(`https://todoandcalendar.herokuapp.com/api/v1/folders/${id}`,{
       params: {
         user_id: auth.id
       }

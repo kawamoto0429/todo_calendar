@@ -7,7 +7,7 @@ export default function PlanEditButton({id}) {
   const {auth, memo1} = useContext(valueContext)
   const [plan, setPlan] = useState([])
   useEffect(()=>{
-    axios.get(`http://localhost:3000/api/v1/plans/${id}`, {
+    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, {
       params:{
         user_id: auth.id
       }
@@ -18,7 +18,7 @@ export default function PlanEditButton({id}) {
     .catch((error) => console.log(error));
   }, [])
   const valueSubmit = (id) => {
-    axios.patch(`http://localhost:3000/api/v1/plans/${id}`, {
+    axios.patch(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, {
       data: {
         title: plan.title,
         place: plan.place,

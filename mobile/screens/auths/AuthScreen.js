@@ -12,7 +12,7 @@ export default function AuthScreen({navigation}) {
   const valueSubmit = () => {
     console.log(email)
     console.log(password)
-    axios.post("http://localhost:3000/api/v1/loginIn", {
+    axios.post("https://todoandcalendar.herokuapp.com/api/v1/loginIn", {
       user: {email: email, password: password}
     })
     .then((res)=>{

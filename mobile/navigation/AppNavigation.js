@@ -18,6 +18,9 @@ import TodoDetailScreen from '../screens/todoes/todoComponents/TodoDetailScreen'
 import PlanDetailScreen from '../screens/todoes/planComponents/PlanDetailScreen';
 import TodoEditButton from '../components/TodoEditButton';
 import PlanEditButton from '../components/PlanEditButton';
+import FolderCreateBtn from '../components/FolderCreateBtn';
+import TodoCreateBtn from '../components/TodoCreateBtn';
+import PlanCreateBtn from '../components/PlanCreateBtn';
  
 
 const Stack = createStackNavigator();
@@ -78,15 +81,21 @@ const TodoStack = () => {
       <Stack.Screen 
         name="TodoCreate" 
         component={TodoCreateScreen} 
-        options={({route})=>({
-          title: "",
+        options={({route, navigation})=>({
+          title: "TODO作成",
+          headerRight: () => (
+            <TodoCreateBtn navigation={navigation}/>
+          ),
         })}
       />
       <Stack.Screen 
         name="FolderCreate" 
         component={FolderCreateScreen} 
-        options={({route})=>({
-          title: "",
+        options={({route, navigation})=>({
+          title: "フォルダ作成",
+          headerRight: () => (
+            <FolderCreateBtn navigation={navigation} />
+          ),
         })}
       />
     </Stack.Navigator>
@@ -98,12 +107,18 @@ const CalendarStack = () => {
     <Stack.Navigator>
       <Stack.Screen name="home"
        component={CalendarScreen}
-       options={{headerShown: false}}
+       options={{
+        headerShown: false,
+        title: "カレンダー"
+      }}
       />
       <Stack.Screen name="planCreate"
        component={PlanCreateScreen}
-       options={({route})=>({
-        title: "",
+       options={({navigation})=>({
+        title: "予定作成",
+        headerRight: () => (
+          <PlanCreateBtn navigation={navigation} />
+        ),
       })}
       />
       <Stack.Screen 

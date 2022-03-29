@@ -4,17 +4,15 @@ import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios'
 import { valueContext } from '../../../context/Context';
 import ErrorMessages from '../../../components/ErrorMessages';
+import { todoContext } from '../../../context/TodoCreate';
 
 
 export default function TodoCreateScreen({ navigation }) {
   const {onOff, setOnOff, auth} = useContext(valueContext)
-  const [todo, setTodo] = useState("")
-  const [memo, setMemo] = useState("")
+  const {setFolder, todo, setTodo, memo, setMemo, error, setError} = useContext(todoContext)
   const [folders, setFolders] = useState([])
-  const [folder, setFolder] = useState("")
-  const [error, setError] = useState([])
   useEffect(()=>{
-    axios.get("http://localhost:3000/api/v1/folders/todo", {
+    axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders/todo", {
       params:{
         user_id: auth.id
       }
@@ -22,41 +20,15 @@ export default function TodoCreateScreen({ navigation }) {
     .then((res)=>{
       setFolders(res.data)
     })
+    setError([])
   },[])
   const items = folders.map((f)=>({
     label: f.name,
     value: f.id
   }))
-  const valueSubmit = () => {
-    axios
-      .post("http://localhost:3000/api/v1/todoes", {
-        data: {content: todo, folder_id: folder, memo: memo, user_id :auth.id},
-      })
-      .then((res) => {
-        if(res.data.message){
-          console.log(res.data.message);
-          setError(res.data.message)
-          alert("登録できませんでした")
-        }else{
-          alert(res.data);
-          setTodo("")
-          setMemo("")
-          navigation.navigate('home')
-          setOnOff(!onOff)
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }
+  
   return (
     <View>
-      <View style={styles.h}>
-        <Text style={styles.text}>TODO制作</Text>
-        <TouchableOpacity onPress={valueSubmit}>
-          <Text style={styles.submit}>作成</Text>
-        </TouchableOpacity>
-      </View>
       <ErrorMessages error={error} />
       <View>
       <TextInput
@@ -69,7 +41,7 @@ export default function TodoCreateScreen({ navigation }) {
       </View>
       <View style={styles.input}>
         <RNPickerSelect
-            onValueChange={setFolder}
+            onValueChange={(prev)=>setFolder(prev)}
             items={items}
             placeholder={{ label: 'フォルダを選択してください', value: '' }}
         />

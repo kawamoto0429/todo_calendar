@@ -2,7 +2,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export const valueContext = React.createContext();
 
 export function Context(props) {
@@ -14,7 +13,7 @@ export function Context(props) {
   const [memo1, setMemo] = useState("")
   useEffect(()=>{
     if (auth){
-      axios.get("http://localhost:3000/api/v1/folders",{
+      axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders",{
         params:{
           id: auth.id,
           password: auth.password_digest
@@ -35,7 +34,7 @@ export function Context(props) {
   }, [onOff, auth])
   useEffect(()=>{
     if (auth){
-      axios.get("http://localhost:3000/api/v1/todoes", {
+      axios.get("https://todoandcalendar.herokuapp.com/api/v1/todoes", {
         params:{
           id: auth.id,
           password: auth.password_digest
@@ -54,7 +53,7 @@ export function Context(props) {
   },[auth, onOff])
   useEffect(()=>{
     if (auth){
-      axios.get("http://localhost:3000/api/v1/plans",{
+      axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans",{
         params:{
           id: auth.id,
           password: auth.password_digest
@@ -75,7 +74,7 @@ export function Context(props) {
     loadItem()
   }, [])
   const deleteClick = (id) => {
-    axios.delete(`http://localhost:3000/api/v1/todoes/${id}`,{
+    axios.delete(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`,{
       params: {
         user_id: auth.id
       }
@@ -88,7 +87,7 @@ export function Context(props) {
 
   const complete = (id) => {
     axios
-    .get(`http://localhost:3000/api/v1/todoes/${id}/complete`, {
+    .get(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}/complete`, {
       params: {
         user_id: auth.id
       }

@@ -11,7 +11,7 @@ export default function UserCreateScreen() {
   const [password_confirmation, setPassword_confirmation] = useState("")
   const [error, setError] = useState([])
   const valueSubmit = () => {
-    axios.post(`http://localhost:3000/api/v1/users`, {
+    axios.post(`https://todoandcalendar.herokuapp.com/api/v1/users`, {
       user: {email: email, password: password, password_confirmation: password_confirmation}
     },
     { withCredentials: true }

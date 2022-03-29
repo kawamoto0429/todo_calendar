@@ -11,19 +11,19 @@ export default function Calendario({ navigation }) {
   const [dates, setDates] = useState("")
   const [dateSelected, setDateSelected] = useState([])
   const date = new Date()
-  const [refreshing, setRefreshing] = useState(false);
-  const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
-  const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    wait(2000).then(() => {
-      setRefreshing(false)
-      navigation.navigate('home')
-    });
-  }, []);
+  // const [refreshing, setRefreshing] = useState(false);
+  // const wait = (timeout) => {
+  //   return new Promise(resolve => setTimeout(resolve, timeout));
+  // }
+  // const onRefresh = useCallback(() => {
+  //   setRefreshing(true);
+  //   wait(2000).then(() => {
+  //     setRefreshing(false)
+  //     navigation.navigate('home')
+  //   });
+  // }, []);
   useEffect(()=>{
-    axios.get("http://localhost:3000/api/v1/plans/find", {
+    axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans/find", {
       params: {
         date,
         user_id: auth.id
@@ -32,10 +32,11 @@ export default function Calendario({ navigation }) {
     .then((res)=>{
       setDates(res.data)
     })
+    
   }, [onOff])
 
   const dayClick = (date) =>{
-    axios.get("http://localhost:3000/api/v1/plans/find", {
+    axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans/find", {
       params: {
         date,
         user_id: auth.id
@@ -53,7 +54,7 @@ export default function Calendario({ navigation }) {
   
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
+      {/* <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl
@@ -61,7 +62,7 @@ export default function Calendario({ navigation }) {
             onRefresh={onRefresh}
           />
         }
-      >
+      > */}
       <CalendarHeader navigation={navigation} />
       <View style={styles.calendar}>
       <Calendar
@@ -81,7 +82,7 @@ export default function Calendario({ navigation }) {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-      </ScrollView>
+      {/* </ScrollView> */}
     </SafeAreaView>
   )
 }

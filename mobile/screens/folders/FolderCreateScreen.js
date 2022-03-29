@@ -4,18 +4,18 @@ import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios'
 import { valueContext } from '../../context/Context';
 import ErrorMessages from '../../components/ErrorMessages';
+import { folderContext } from '../../context/FolderCreate';
 
 export default function FolderCreateScreen({ navigation }) {
-  const {onOff, setOnOff, auth} = useContext(valueContext)
-  const [folder, setFolder] = useState("")
-  const [format, setFormat] = useState("")
+  // const {onOff, setOnOff, auth} = useContext(valueContext)
+  const {folder, setFolder, setFormat, error, setError} = useContext(folderContext)
   const [formats, setFormats] = useState([])
-  const [error, setError] = useState([])
   useEffect(()=>{
-    axios.get("http://localhost:3000/api/v1/formats/index")
+    axios.get("https://todoandcalendar.herokuapp.com/api/v1/formats/index")
     .then((res)=>{
       setFormats(res.data)
     })
+    setError([])
   }, [])
   const item = formats.map((f)=>{
     return(
@@ -25,26 +25,6 @@ export default function FolderCreateScreen({ navigation }) {
       }
     )
   })
-  const valueSubmit = () => {
-    axios
-      .post("http://localhost:3000/api/v1/folders", {
-        data: {name: folder, format: format, user_id: auth.id},
-      })
-      .then((res) => {
-        if (res.data.message) {
-          setError(res.data.message)
-          alert("フォルダーが制作できませんでした")
-        }else{
-          alert(res.data);
-          setFolder("")
-          navigation.navigate('home')
-          setOnOff(!onOff)
-        }
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }
   
   return (
     <KeyboardAvoidingView
@@ -53,12 +33,6 @@ export default function FolderCreateScreen({ navigation }) {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <>
-      <View style={styles.h}>
-        <Text style={styles.text}>フォルダ制作</Text>
-        <TouchableOpacity onPress={valueSubmit}>
-          <Text style={styles.submit}>作成</Text>
-        </TouchableOpacity>
-      </View>
       <ErrorMessages error={error} />
       <View>
       <TextInput

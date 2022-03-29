@@ -9,7 +9,7 @@ export default function PlanDetailScreen({route}) {
   const id = route.params
   const [plan, setPlan] = useState([])
   useEffect(()=>{
-    axios.get(`http://localhost:3000/api/v1/plans/${id}`)
+    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`)
     .then((res)=>{
       console.log(res.data)
       setPlan(res.data)
