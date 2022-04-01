@@ -12,7 +12,7 @@ export default function TodoShowScreen({route,  navigation }) {
   const [folder, setFolder] = useState([])
   console.log(auth)
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/v1/folders/${id}`,{
+    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/folders/${id}`,{
       params:{
         user_id: auth.id
       },

@@ -1,6 +1,6 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, Keyboard } from 'react-native'
-import React, {useState, useContext} from 'react'
-import axios from 'axios'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import React, {useState, useContext} from 'react';
+import axios from 'axios';
 import { valueContext } from '../../context/Context';
 
 export default function AuthScreen({navigation}) {
