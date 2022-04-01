@@ -14,6 +14,7 @@ export default function Logout() {
     })
     .catch((error) => console.log(error));
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     navigation("/logout");
     window.location.reload()
   }

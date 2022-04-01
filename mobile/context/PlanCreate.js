@@ -4,7 +4,7 @@ import axios from 'axios'
 export const planContext = React.createContext();
 
 export default function PlanCreate(props) {
-  const {auth, onOff, setOnOff} = useContext(valueContext)
+  const {auth, onOff, setOnOff, token} = useContext(valueContext)
   const [title, setTitle] = useState("")
   const [place, setPlace] = useState("")
   const [startDate, setStartDate] = useState("0000-00-00")
@@ -20,7 +20,8 @@ export default function PlanCreate(props) {
   const [endTimeLook, setEndTimelook] = useState('00:00')
   const valueSubmit = (navigation) => {
     axios
-      .post("https://todoandcalendar.herokuapp.com/api/v1/plans", {
+      .post("https://todoandcalendar.herokuapp.com/api/v1/plans", 
+      {
         data: {
           title: title,
           place: place,
@@ -32,6 +33,10 @@ export default function PlanCreate(props) {
           memo: memo,
           user_id: auth.id,
         }
+      },{
+        headers: {
+          Authorization: token
+        },
       })
       .then((res) => {
         if(res.data.message){

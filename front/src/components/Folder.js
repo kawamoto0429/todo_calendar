@@ -4,7 +4,7 @@ import {useNavigate} from 'react-router-dom'
 import {valueContext} from "../context/Context"
 
 export default function Folder() {
-  const {onOff, setOnOff, auth} = useContext(valueContext)
+  const {onOff, setOnOff, auth, token} = useContext(valueContext)
   const [folder, setFolder] = useState("")
   const [f, setF] = useState(1)
   const [format, setFormat] = useState([])
@@ -33,6 +33,10 @@ export default function Folder() {
     axios
       .post("http://localhost:3000/api/v1/folders", {
         data: {name: folder, format: f, user_id: auth.id},
+      },{
+        headers:{
+          Authorization: token,
+        },
       })
       .then((res) => {
         console.log(res);

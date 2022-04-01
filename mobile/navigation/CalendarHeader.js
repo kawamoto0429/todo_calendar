@@ -1,11 +1,8 @@
 import { View, Text,StyleSheet,  TouchableOpacity } from 'react-native'
 import React, {useContext} from 'react'
 import Icon2 from 'react-native-vector-icons/AntDesign';
-import axios from 'axios'
-import { valueContext } from '../context/Context';
 
 export default function CalendarHeader({ navigation }) {
-  const {onOff, setOnOff} = useContext(valueContext)
   return (
     <View style={styles.container}>
       <View style={styles.empty}>

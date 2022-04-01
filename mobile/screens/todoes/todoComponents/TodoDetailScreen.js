@@ -6,13 +6,16 @@ import { valueContext } from '../../../context/Context'
 
 export default function TodoDetailScreen({route}) {
   const id = route.params
-  const {auth} = useContext(valueContext)
+  const {auth, token} = useContext(valueContext)
   const [todo, setTodo] = useState([])
   useEffect(()=>{
     axios.get(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`, {
       params:{
         user_id: auth.id
-      }
+      },
+      headers: {
+        Authorization: token
+      },
     })
     .then((res)=>{
       setTodo(res.data)

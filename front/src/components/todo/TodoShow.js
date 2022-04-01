@@ -6,7 +6,7 @@ import axios from 'axios';
 import { valueContext } from "../../context/Context";
 
 export default function TodoShow() {
-  const {auth} = useContext(valueContext)
+  const {auth, token} = useContext(valueContext)
   const params = useParams();
   const id = params.id;
   const navigation = useNavigate();
@@ -15,10 +15,11 @@ export default function TodoShow() {
   const [detail, setDetail] = useState(0)
   const [onOff, setOnOff] = useState(false);
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/v1/folders/${id}`, {
-      params:{
-        user_id: auth.id
-      }
+    console.log(token)
+    axios.get(`http://localhost:3000/api/v1/folders/${id}`, 
+    {
+      params:{user_id: auth.id},
+      headers: { Authorization: token },
     })
     .then((response) => {
       if(response.data === "error"){
@@ -34,10 +35,9 @@ export default function TodoShow() {
   const deleteClick = (item) => {
     axios
     .delete(`http://localhost:3000/api/v1/todoes/${item}`, {
-      params: {
-        user_id: auth.id
-      }
-    })
+      params:{user_id: auth.id},
+      headers:{Authorization: token}
+      })
     .then((res) => {
       console.log(res.data)
       setOnOff(!onOff)
@@ -53,7 +53,8 @@ export default function TodoShow() {
     .get(`http://localhost:3000/api/v1/todoes/${id}/complete`, {
       params: {
         user_id: auth.id
-      }
+      },
+        headers: { Authorization: token }
     })
     .then((res) => {
       if(res.data === "error"){

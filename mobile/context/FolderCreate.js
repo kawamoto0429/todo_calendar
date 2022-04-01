@@ -4,7 +4,7 @@ import axios from 'axios'
 export const folderContext = React.createContext();
 
 export default function FolderCreate(props) {
-  const {onOff, setOnOff, auth} = useContext(valueContext)
+  const {onOff, setOnOff, auth, token} = useContext(valueContext)
   const [folder, setFolder] = useState("")
   const [format, setFormat] = useState("")
   const [error, setError] = useState([])
@@ -12,6 +12,10 @@ export default function FolderCreate(props) {
     axios
       .post("https://todoandcalendar.herokuapp.com/api/v1/folders", {
         data: {name: folder, format: format, user_id: auth.id},
+      }, {
+        headers: {
+          Authorization: token
+        },
       })
       .then((res) => {
         if (res.data.message) {

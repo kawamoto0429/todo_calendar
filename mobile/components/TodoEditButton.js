@@ -4,13 +4,13 @@ import { valueContext } from '../context/Context'
 import axios from "axios"
 
 export default function TodoEditButton({id}) {
-  const {auth, memo1} = useContext(valueContext)
+  const {auth, memo1, token} = useContext(valueContext)
   const [todo, setTodo] = useState([])
   useEffect(()=>{
     axios.get(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`, {
-      params:{
-        user_id: auth.id
-      }
+      headers: {
+        Authorization: token
+      },
     })
     .then((res)=>{
       setTodo(res.data)
@@ -20,6 +20,10 @@ export default function TodoEditButton({id}) {
   const valueSubmit = (id) => {
     axios.patch(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`, {
       data: {content: todo.content, folder_id: todo.folder_id, memo: memo1, user_id :auth.id},
+    },{
+      headers: {
+        Authorization: token
+      },
     })
     .then((res) => {
       alert(res.data)

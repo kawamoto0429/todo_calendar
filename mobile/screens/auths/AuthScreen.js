@@ -2,7 +2,6 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFe
 import React, {useState, useContext} from 'react'
 import axios from 'axios'
 import { valueContext } from '../../context/Context';
-const DATA = "@DATA"
 
 export default function AuthScreen({navigation}) {
   const {saveItem, loadItem} = useContext(valueContext);

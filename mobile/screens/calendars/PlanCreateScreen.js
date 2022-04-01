@@ -9,7 +9,7 @@ import ErrorMessages from '../../components/ErrorMessages';
 import { planContext } from '../../context/PlanCreate';
 
 export default function PlanCreateScreen({navigation}) {
-  const {auth, onOff, setOnOff} = useContext(valueContext)
+  const {auth, onOff, setOnOff, token} = useContext(valueContext)
   const {title, setTitle, place, setPlace, setStartDate, setStartTime, setEndDate, setEndTime, memo, setMemo, setFolder, error, setError, startDateLook, setStartDateLook, startTimeLook, setStartTimeLook, endDateLook, setEndDateLook, endTimeLook, setEndTimelook} = useContext(planContext)
   const [folders, setFolders] = useState([])
 
@@ -17,7 +17,10 @@ export default function PlanCreateScreen({navigation}) {
     axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders/plan", {
       params:{
         user_id: auth.id
-      }
+      },
+      headers: {
+        Authorization: token
+      },
     })
     .then((res)=>{
       setFolders(res.data)

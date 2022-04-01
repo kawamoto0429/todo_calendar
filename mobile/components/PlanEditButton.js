@@ -4,13 +4,13 @@ import { valueContext } from '../context/Context'
 import axios from "axios"
 
 export default function PlanEditButton({id}) {
-  const {auth, memo1} = useContext(valueContext)
+  const {auth, memo1, token} = useContext(valueContext)
   const [plan, setPlan] = useState([])
   useEffect(()=>{
     axios.get(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, {
-      params:{
-        user_id: auth.id
-      }
+      headers: {
+        Authorization: token
+      },
     })
     .then((res)=>{
       setPlan(res.data)
@@ -18,7 +18,8 @@ export default function PlanEditButton({id}) {
     .catch((error) => console.log(error));
   }, [])
   const valueSubmit = (id) => {
-    axios.patch(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, {
+    axios.patch(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, 
+    {
       data: {
         title: plan.title,
         place: plan.place,
@@ -29,6 +30,10 @@ export default function PlanEditButton({id}) {
         folder_id: plan.folder_id, 
         memo: memo1,
         user_id: auth.id
+      },
+    },{
+      headers: {
+        Authorization: token
       },
     })
     .then((res) => {

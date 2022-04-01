@@ -6,7 +6,7 @@ import PlanDetail from './PlanDetail';
 import { valueContext } from '../../context/Context';
 
 export default function PlanShow() {
-  const {auth} = useContext(valueContext)
+  const {auth, token} = useContext(valueContext)
   const navigation = useNavigate();
   const params = useParams();
   const id = params.id;
@@ -16,6 +16,9 @@ export default function PlanShow() {
   const [onOff, setOnOff] = useState(false);
   useEffect(() => {
     axios.get(`http://localhost:3000/api/v1/folders/${id}`, {
+      // headers: {
+      //   Authorization: token,
+      // },
       params:{
         user_id: auth.id
       }
@@ -34,6 +37,9 @@ export default function PlanShow() {
   const deleteClick = (item) => {
     axios
     .delete(`http://localhost:3000/api/v1/plans/${item}`, {
+      headers: {
+        Authorization: token,
+      },
       params: {
         user_id: auth.id
       }

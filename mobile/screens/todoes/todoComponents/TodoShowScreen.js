@@ -7,15 +7,18 @@ import {PlanItem} from "../../../components/PlanItem"
 
 export default function TodoShowScreen({route,  navigation }) {
   const id = route.params
-  const {auth, onOff} = useContext(valueContext)
+  const {auth, onOff, token} = useContext(valueContext)
   const [todoes, setTodoes] = useState([])
   const [folder, setFolder] = useState([])
   console.log(auth)
   useEffect(() => {
-    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/folders/${id}`,{
+    axios.get(`http://localhost:3000/api/v1/folders/${id}`,{
       params:{
         user_id: auth.id
-      }
+      },
+      headers: {
+        Authorization: token
+      },
     })
     .then((response) => {
       setFolder(response.data[0])

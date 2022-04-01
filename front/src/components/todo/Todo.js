@@ -4,7 +4,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
 export default function Todo() {
-  const {folders, onOff,setOnOff, auth} = useContext(valueContext)
+  const {folders, onOff,setOnOff, auth, token} = useContext(valueContext)
   const [content, setContent] = useState("")
   const [memo, setMemo] =useState("")
   const [folder, setFolder] = useState(null)
@@ -31,7 +31,11 @@ export default function Todo() {
   const valueSubmit = () => {
     console.log(folder)
     axios.post("http://localhost:3000/api/v1/todoes", {
-        data: {content: content, folder_id: folder, memo: memo, user_id: auth.id},
+        data: {content: content, folder_id: folder, memo: memo, user_id: auth.id}
+      },{
+        headers:{
+           Authorization: token 
+        }
       })
       .then((res) => {
         console.log(res);

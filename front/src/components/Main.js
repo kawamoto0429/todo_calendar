@@ -5,13 +5,16 @@ import {Link} from 'react-router-dom'
 import AlonePlans from "./plan/AlonePlans"
 
 export default function Main() {
-  const {folders, onOff, setOnOff, todoes, plans, auth} = useContext(valueContext)
+  const {folders, onOff, setOnOff, todoes, plans, auth, token} = useContext(valueContext)
 
   const deleteClick = (id) => {
     axios.delete(`http://localhost:3000/api/v1/folders/${id}`,{
+      headers: {
+        Authorization: token,
+      },
       params: {
         user_id: auth.id
-      }
+      },
     })
     .then((res) => {
       console.log(res.data)
@@ -49,13 +52,13 @@ export default function Main() {
           }
           
         })}
-        <AlonePlans todoes={todoes} />
+        {/* <AlonePlans todoes={todoes} /> */}
         
-        {plans.map((item)=>{
+        {/* {plans.map((item)=>{
           return (
             <li key={item.id}>{item.title}</li>
           )
-        })}
+        })} */}
       </ul>  
     </div>
   )

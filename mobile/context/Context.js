@@ -11,12 +11,16 @@ export function Context(props) {
   const [plans, setPlans] = useState([])
   const [auth, setAuth] = useState("")
   const [memo1, setMemo] = useState("")
+  const [token, setToken] = useState("")
   useEffect(()=>{
     if (auth){
-      axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders",{
+      axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders",
+      {
+        headers: {
+          Authorization: token
+        },
         params:{
-          id: auth.id,
-          password: auth.password_digest
+          user_id: auth.id
         }
       })
       .then((res) => {
@@ -34,10 +38,13 @@ export function Context(props) {
   }, [onOff, auth])
   useEffect(()=>{
     if (auth){
-      axios.get("https://todoandcalendar.herokuapp.com/api/v1/todoes", {
+      axios.get("https://todoandcalendar.herokuapp.com/api/v1/todoes", 
+      {
+        headers: {
+          Authorization: token
+        },
         params:{
-          id: auth.id,
-          password: auth.password_digest
+          user_id: auth.id
         }
       })
       .then((res) => {
@@ -53,10 +60,13 @@ export function Context(props) {
   },[auth, onOff])
   useEffect(()=>{
     if (auth){
-      axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans",{
+      axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans",
+      {
+        headers: {
+          Authorization: token
+        },
         params:{
-          id: auth.id,
-          password: auth.password_digest
+          user_id: auth.id
         }
       })
       .then((res) => {
@@ -74,11 +84,15 @@ export function Context(props) {
     loadItem()
   }, [])
   const deleteClick = (id) => {
-    axios.delete(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`,{
-      params: {
-        user_id: auth.id
-      }
-    })
+    axios.delete(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`,
+      {
+        headers: {
+          Authorization: token
+        },
+        params:{
+          user_id: auth.id
+        }
+      })
     .then((res) => {
       console.log(res.data)
       setOnOff(!onOff)
@@ -88,8 +102,8 @@ export function Context(props) {
   const complete = (id) => {
     axios
     .get(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}/complete`, {
-      params: {
-        user_id: auth.id
+      headers: {
+        Authorization: token
       }
     })
     .then((res) => {
@@ -102,25 +116,31 @@ export function Context(props) {
 
   const saveItem = async(data) => {
     try {
-      const todoString = JSON.stringify(data);
+      const todoString = JSON.stringify(data.user);
       await AsyncStorage.setItem("user", todoString);
+      const tokenString = JSON.stringify(data.jwt)
+      await AsyncStorage.setItem("token", tokenString);
     } catch (e) {
       console.log(e)
     }
   }
   const loadItem = async () => {
     const item = await AsyncStorage.getItem("user");
+    const apitoken = await AsyncStorage.getItem("token");
     if (item !== null){
+      console.log(JSON.parse(apitoken))
       console.log(JSON.parse(item))
+      setToken(JSON.parse(apitoken))
       setAuth(JSON.parse(item))
     }else{
-      console.log(item)
+      setToken("")
       setAuth("")
     }
   }
   const reItem = async() => {
     try {
       AsyncStorage.removeItem("user");
+      AsyncStorage.removeItem("token");
       loadItem()
     } catch (e) {
       console.log(e)
@@ -128,7 +148,7 @@ export function Context(props) {
   }
 
   return (
-    <valueContext.Provider value={{onOff, setOnOff, todoes, plans, folders, auth, setAuth, saveItem, loadItem, reItem,deleteClick, complete, memo1, setMemo}}>
+    <valueContext.Provider value={{onOff, setOnOff, todoes, plans, folders, auth, setAuth, saveItem, loadItem, reItem,deleteClick, complete, memo1, setMemo, token}}>
       {props.children}
     </valueContext.Provider>
   )

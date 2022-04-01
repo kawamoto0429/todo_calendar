@@ -5,11 +5,15 @@ import PlanMemo from './PlanMemo'
 import { valueContext } from '../../../context/Context'
 
 export default function PlanDetailScreen({route}) {
-  const {auth} = useContext(valueContext)
+  const {token} = useContext(valueContext)
   const id = route.params
   const [plan, setPlan] = useState([])
   useEffect(()=>{
-    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`)
+    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, {
+      headers: {
+        Authorization: token
+      },
+    })
     .then((res)=>{
       console.log(res.data)
       setPlan(res.data)

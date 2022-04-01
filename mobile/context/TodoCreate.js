@@ -4,15 +4,20 @@ import axios from 'axios'
 export const todoContext = React.createContext();
 
 export default function TodoCreate(props) {
-  const {onOff, setOnOff, auth} = useContext(valueContext)
+  const {onOff, setOnOff, auth, token} = useContext(valueContext)
   const [todo, setTodo] = useState("")
   const [memo, setMemo] = useState("")
   const [error, setError] = useState([])
   const [folder, setFolder] = useState("")
   const valueSubmit = (navigation) => {
     axios
-      .post("https://todoandcalendar.herokuapp.com/api/v1/todoes", {
+      .post("https://todoandcalendar.herokuapp.com/api/v1/todoes", 
+      {
         data: {content: todo, folder_id: folder, memo: memo, user_id :auth.id},
+      },{
+        headers: {
+          Authorization: token
+        },
       })
       .then((res) => {
         if(res.data.message){

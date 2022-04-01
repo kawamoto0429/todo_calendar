@@ -1,10 +1,7 @@
 import { View, Text,StyleSheet,  TouchableOpacity } from 'react-native'
 import React, {useContext} from 'react'
 import Icon2 from 'react-native-vector-icons/AntDesign';
-import axios from 'axios'
 import { valueContext } from '../context/Context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const DATA = "@DATA"
 
 export default function TodoHeader({ navigation }) {
   const {onOff, setOnOff, reItem} = useContext(valueContext)

@@ -8,14 +8,17 @@ import { todoContext } from '../../../context/TodoCreate';
 
 
 export default function TodoCreateScreen({ navigation }) {
-  const {onOff, setOnOff, auth} = useContext(valueContext)
+  const {auth, token} = useContext(valueContext)
   const {setFolder, todo, setTodo, memo, setMemo, error, setError} = useContext(todoContext)
   const [folders, setFolders] = useState([])
   useEffect(()=>{
     axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders/todo", {
       params:{
         user_id: auth.id
-      }
+      },
+      headers: {
+        Authorization: token
+      },
     })
     .then((res)=>{
       setFolders(res.data)

@@ -4,7 +4,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
 export default function Plan() {
-  const {folders, onOff, setOnOff, auth} = useContext(valueContext)
+  const {folders, onOff, setOnOff, auth, token} = useContext(valueContext)
   const navigation = useNavigate()
   const [data, setData] = useState({
     title: "",
@@ -42,6 +42,10 @@ export default function Plan() {
                 folder_id: folder,
                 user_id: auth.id,
               },
+      },{
+        headers: {
+          Authorization: token
+        }
       })
       .then((res) => {
         console.log(res);

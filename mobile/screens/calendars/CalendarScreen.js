@@ -7,7 +7,7 @@ import { valueContext } from '../../context/Context';
 import { PlanItem } from '../../components/PlanItem';
 
 export default function Calendario({ navigation }) {
-  const {auth, onOff} = useContext(valueContext)
+  const {auth, onOff, token} = useContext(valueContext)
   const [dates, setDates] = useState("")
   const [dateSelected, setDateSelected] = useState({})
   const date = new Date()
@@ -27,12 +27,14 @@ export default function Calendario({ navigation }) {
       params: {
         date,
         user_id: auth.id
-      }
+      },
+      headers: {
+        Authorization: token
+      },
     })
     .then((res)=>{
       setDates(res.data)
     })
-    
   }, [onOff])
 
   const dayClick = (date) =>{
@@ -40,7 +42,10 @@ export default function Calendario({ navigation }) {
       params: {
         date,
         user_id: auth.id
-      }
+      },
+      headers: {
+        Authorization: token
+      },
     })
     .then((res)=>{
       console.log(res.data)
