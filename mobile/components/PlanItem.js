@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   box2: {
     margin: 15,
+    marginBottom: 20,
     backgroundColor: "#ffffff",
     borderRadius: 8,
     padding: 15,

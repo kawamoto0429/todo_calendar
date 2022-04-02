@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, SafeAreaView } from 'react-native'
 import React, {useContext} from 'react'
-import TodoHeader from '../../navigation/TodoHeader'
 import { valueContext } from '../../context/Context'
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
@@ -55,7 +54,6 @@ const TodoScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TodoHeader navigation={navigation}/>
       <View style={styles.memoh}>
         <Text style={styles.font}>メモ</Text>
       </View>

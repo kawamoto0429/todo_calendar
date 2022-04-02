@@ -8,8 +8,8 @@ import { valueContext } from '../../context/Context';
 import ErrorMessages from '../../components/ErrorMessages';
 import { planContext } from '../../context/PlanCreate';
 
-export default function PlanCreateScreen({navigation}) {
-  const {auth, onOff, setOnOff, token} = useContext(valueContext)
+export default function PlanCreateScreen() {
+  const {auth, token} = useContext(valueContext)
   const {title, setTitle, place, setPlace, setStartDate, setStartTime, setEndDate, setEndTime, memo, setMemo, setFolder, error, setError, startDateLook, setStartDateLook, startTimeLook, setStartTimeLook, endDateLook, setEndDateLook, endTimeLook, setEndTimelook} = useContext(planContext)
   const [folders, setFolders] = useState([])
 
@@ -147,10 +147,8 @@ export default function PlanCreateScreen({navigation}) {
         value={memo}
         placeholder="メモ"
         autoCapitalize = "none"
+        multiline={true}
       />
-      </View>
-      <View>
-        
       </View>
       <View style={styles.datetime}>
         <View style={styles.label}>

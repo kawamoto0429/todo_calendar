@@ -120,6 +120,7 @@ export function Context(props) {
       await AsyncStorage.setItem("user", todoString);
       const tokenString = JSON.stringify(data.jwt)
       await AsyncStorage.setItem("token", tokenString);
+      console.log("ok")
     } catch (e) {
       console.log(e)
     }

@@ -1,4 +1,4 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, TextInput, StyleSheet } from 'react-native'
 import React, {useState, useEffect, useContext} from 'react'
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios'
@@ -7,7 +7,7 @@ import ErrorMessages from '../../../components/ErrorMessages';
 import { todoContext } from '../../../context/TodoCreate';
 
 
-export default function TodoCreateScreen({ navigation }) {
+export default function TodoCreateScreen() {
   const {auth, token} = useContext(valueContext)
   const {setFolder, todo, setTodo, memo, setMemo, error, setError} = useContext(todoContext)
   const [folders, setFolders] = useState([])
@@ -55,7 +55,9 @@ export default function TodoCreateScreen({ navigation }) {
         onChangeText={(prev)=>setMemo(prev)}
         value={memo}
         placeholder="メモ"
+        multiline={true}
         autoCapitalize = "none"
+        
       />
       </View>
     </View>

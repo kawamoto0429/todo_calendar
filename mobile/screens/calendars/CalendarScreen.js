@@ -2,7 +2,6 @@ import { View,ScrollView, RefreshControl, StyleSheet, SafeAreaView, FlatList} fr
 import React, {useState, useEffect, useContext, useCallback} from 'react'
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import axios from 'axios'
-import CalendarHeader from '../../navigation/CalendarHeader';
 import { valueContext } from '../../context/Context';
 import { PlanItem } from '../../components/PlanItem';
 
@@ -10,7 +9,8 @@ export default function Calendario({ navigation }) {
   const {auth, onOff, token} = useContext(valueContext)
   const [dates, setDates] = useState("")
   const [dateSelected, setDateSelected] = useState({})
-  const date = new Date()
+  const today = new Date()
+  const [date, setDate] = useState(today)
   // const [refreshing, setRefreshing] = useState(false);
   // const wait = (timeout) => {
   //   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -35,23 +35,7 @@ export default function Calendario({ navigation }) {
     .then((res)=>{
       setDates(res.data)
     })
-  }, [onOff])
-
-  const dayClick = (date) =>{
-    axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans/find", {
-      params: {
-        date,
-        user_id: auth.id
-      },
-      headers: {
-        Authorization: token
-      },
-    })
-    .then((res)=>{
-      console.log(res.data)
-      setDates(res.data)
-    })
-  }
+  }, [date])
 
   const renderItem = ({ item }) => (
     <PlanItem item={item} navigation={navigation} />
@@ -68,13 +52,12 @@ export default function Calendario({ navigation }) {
           />
         }
       > */}
-      <CalendarHeader navigation={navigation} />
       <View style={styles.calendar}>
       <Calendar
         minDate={'2000-01-01'}
         maxDate={'2100-12-31'}
         onDayPress={day => {
-          dayClick(day.dateString)
+          setDate(day.dateString)
           console.log(day.dateString)
           setDateSelected({[day.dateString]:{selected: true, selectedColor: '#466A8F'}})
           console.log(dateSelected)
@@ -133,7 +116,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     height: 355,
     backgroundColor: '#fff',
-    marginBottom: 10,
+    marginBottom: 25,
   },
   scrollView: {
     flex: 1,
