@@ -1,9 +1,9 @@
-import FolderCreateBtn from "../../components/FolderCreateBtn"
-import FolderNew from "../../components/FolderNew"
-import PlanEditButton from "../../components/PlanEditButton"
-import TodoCreateBtn from "../../components/TodoCreateBtn"
-import TodoEditButton from "../../components/TodoEditButton"
-import TodoNew from "../../components/TodoNew"
+import FolderCreateBtn from "../../components/folders/FolderCreateBtn"
+import FolderNew from "../../components/folders/FolderNew"
+import PlanEditButton from "../../components/plans/PlanEditButton"
+import TodoCreateBtn from "../../components/todoes/TodoCreateBtn"
+import TodoEditButton from "../../components/todoes/TodoEditButton"
+import TodoNew from "../../components/todoes/TodoNew"
 import FolderCreateScreen from "../../screens/folders/FolderCreateScreen"
 import AllPlanScreen from "../../screens/todoes/planComponents/AllPlanScreen"
 import PlanDetailScreen from "../../screens/todoes/planComponents/PlanDetailScreen"
@@ -26,12 +26,13 @@ export const TodoStack = () => {
             <TodoNew navigation={navigation}  />
           ),
           headerRight: () => (
-            <FolderNew navigation={navigation}  />
+            <FolderNew navigation={navigation} />
           ),
           headerStyle: {
             backgroundColor: "gold",
           },
           headerTitleStyle: {
+            textAlign:"center", 
             fontWeight: 'bold',
           },
         })}

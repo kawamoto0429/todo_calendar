@@ -18,7 +18,7 @@ export default function PlanNew({navigation}) {
 
 const styles = StyleSheet.create({
   plan:{
-    marginRight: 20,
+    marginLeft: 20,
   },
   font:{
     fontSize: 30,

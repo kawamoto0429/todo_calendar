@@ -1,4 +1,3 @@
-
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,7 +11,9 @@ export function Context(props) {
   const [auth, setAuth] = useState("")
   const [memo1, setMemo] = useState("")
   const [token, setToken] = useState("")
+  const [apiLoad, setApiLoad] = useState(false)
   useEffect(()=>{
+    setApiLoad(true)
     if (auth){
       axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders",
       {
@@ -27,6 +28,7 @@ export function Context(props) {
         if (res.data != "error"){
           console.log(res.data)
           setFolders((prev)=>res.data);
+          setApiLoad(false)
         }else{
           console.log(res.data)
           reItem()
@@ -38,6 +40,7 @@ export function Context(props) {
   }, [onOff, auth])
   useEffect(()=>{
     if (auth){
+      setApiLoad(true)
       axios.get("https://todoandcalendar.herokuapp.com/api/v1/todoes", 
       {
         headers: {
@@ -51,6 +54,7 @@ export function Context(props) {
         if (res.data != "error"){
           console.log(res.data)
           setTodoes((prev)=>res.data);
+          setApiLoad(false)
         }else{
           console.log(res.data)
           reItem()
@@ -59,6 +63,7 @@ export function Context(props) {
     }
   },[auth, onOff])
   useEffect(()=>{
+    setApiLoad(true)
     if (auth){
       axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans",
       {
@@ -73,6 +78,7 @@ export function Context(props) {
         if (res.data != "error"){
           console.log(res.data)
           setPlans((prev)=>res.data);
+          setApiLoad(false)
         }else{
           console.log(res.data)
           reItem()
@@ -149,7 +155,7 @@ export function Context(props) {
   }
 
   return (
-    <valueContext.Provider value={{onOff, setOnOff, todoes, plans, folders, auth, setAuth, saveItem, loadItem, reItem,deleteClick, complete, memo1, setMemo, token}}>
+    <valueContext.Provider value={{onOff, setOnOff, todoes, plans, folders, auth, setAuth, saveItem, loadItem, reItem,deleteClick, complete, memo1, setMemo, token, apiLoad, setApiLoad}}>
       {props.children}
     </valueContext.Provider>
   )

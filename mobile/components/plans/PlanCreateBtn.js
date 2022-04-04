@@ -1,9 +1,9 @@
-import { Text, StyleSheet, TouchableOpacity } from 'react-native'
-import {useContext} from 'react'
-import  { folderContext } from '../context/FolderCreate';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native'
+import React, {useContext} from 'react'
+import { planContext } from '../../context/PlanCreate';
 
-export default function FolderCreateBtn({ navigation }) {
-  const {valueSubmit} = useContext(folderContext)
+export default function PlanCreateBtn({navigation}) {
+  const {valueSubmit} = useContext(planContext)
   return (
     <TouchableOpacity onPress={()=>valueSubmit(navigation)}>
       <Text style={styles.font}>作成</Text>

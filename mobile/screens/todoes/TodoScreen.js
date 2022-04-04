@@ -3,9 +3,11 @@ import React, {useContext} from 'react'
 import { valueContext } from '../../context/Context'
 import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
+import { DeleteButton } from '../../components/DeleteButton';
+import Loading from '../../components/Loading';
 
 const TodoScreen = ({ navigation }) => {
-  const {folders, auth, onOff,setOnOff, token} = useContext(valueContext)
+  const {folders, auth, onOff,setOnOff, token, apiLoad} = useContext(valueContext)
   const deleteClick = (id) => {
     axios.delete(`https://todoandcalendar.herokuapp.com/api/v1/folders/${id}`,{
       params: {
@@ -26,11 +28,7 @@ const TodoScreen = ({ navigation }) => {
       {
         backgroundColor: "#f5f5f5",
         component:(
-          <TouchableOpacity onPress={()=>deleteClick(id)}>
-            <View style={styles.delete}>
-              <Text style={styles.swipeFont}>削除</Text>
-            </View>
-          </TouchableOpacity>
+          <DeleteButton id={id} deleteClick={deleteClick} />
         )
       }
     ]
@@ -78,6 +76,7 @@ const TodoScreen = ({ navigation }) => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
+      {apiLoad && <Loading />}
     </SafeAreaView>
   )
 }
@@ -118,12 +117,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   delete: {
-    marginRight: 25,
     marginBottom: 8,
     backgroundColor: "#ffffff",
     padding: 17,
     borderRadius: 100,
     backgroundColor: "red",
+    alignItems: 'center',
   },
   swipeFont:{
     fontSize: 10,

@@ -1,12 +1,12 @@
-import { View,ScrollView, RefreshControl, StyleSheet, SafeAreaView, FlatList} from 'react-native'
+import { View, ScrollView, RefreshControl, StyleSheet, SafeAreaView, FlatList} from 'react-native'
 import React, {useState, useEffect, useContext, useCallback} from 'react'
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import axios from 'axios'
 import { valueContext } from '../../context/Context';
-import { PlanItem } from '../../components/PlanItem';
+import { PlanItem } from '../../components/plans/PlanItem';
 
 export default function Calendario({ navigation }) {
-  const {auth, onOff, token} = useContext(valueContext)
+  const {auth, token, onOff} = useContext(valueContext)
   const [dates, setDates] = useState("")
   const [dateSelected, setDateSelected] = useState({})
   const today = new Date()
@@ -23,9 +23,10 @@ export default function Calendario({ navigation }) {
   //   });
   // }, []);
   useEffect(()=>{
+    console.log(date)
     axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans/find", {
       params: {
-        date,
+        date: date,
         user_id: auth.id
       },
       headers: {
@@ -35,7 +36,7 @@ export default function Calendario({ navigation }) {
     .then((res)=>{
       setDates(res.data)
     })
-  }, [date])
+  }, [date, onOff])
 
   const renderItem = ({ item }) => (
     <PlanItem item={item} navigation={navigation} />

@@ -2,8 +2,8 @@ import { View, Text, StyleSheet, FlatList, SafeAreaView } from 'react-native'
 import React, {useState, useEffect, useContext} from 'react'
 import axios from 'axios'
 import { valueContext } from '../../../context/Context';
-import {TodoItem} from "../../../components/TodoItem"
-import {PlanItem} from "../../../components/PlanItem"
+import {TodoItem} from "../../../components/todoes/TodoItem"
+import {PlanItem} from "../../../components/plans/PlanItem"
 
 export default function TodoShowScreen({route,  navigation }) {
   const id = route.params

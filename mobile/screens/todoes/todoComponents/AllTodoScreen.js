@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import React, {useContext} from 'react'
 import { valueContext } from '../../../context/Context'
-import { TodoItem } from '../../../components/TodoItem';
+import { TodoItem } from '../../../components/todoes/TodoItem';
 
 export default function AllTodoScreen({navigation}) {
   const {todoes} = useContext(valueContext)

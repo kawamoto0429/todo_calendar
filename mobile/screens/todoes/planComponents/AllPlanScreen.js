@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
 import React, {useContext} from 'react'
 import { FlatList } from 'react-native-gesture-handler';
 import { valueContext } from '../../../context/Context';
-import { PlanItem } from '../../../components/PlanItem';
+import { PlanItem } from '../../../components/plans/PlanItem';
 
 export default function AllPlanScreen({navigation}) {
   const {plans} = useContext(valueContext)

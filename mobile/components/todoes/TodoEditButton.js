@@ -1,36 +1,25 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import {Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React, {useState, useEffect, useContext} from 'react'
-import { valueContext } from '../context/Context'
+import { valueContext } from '../../context/Context'
 import axios from "axios"
 
-export default function PlanEditButton({id}) {
+export default function TodoEditButton({id}) {
   const {auth, memo1, token} = useContext(valueContext)
-  const [plan, setPlan] = useState([])
+  const [todo, setTodo] = useState([])
   useEffect(()=>{
-    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, {
+    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`, {
       headers: {
         Authorization: token
       },
     })
     .then((res)=>{
-      setPlan(res.data)
+      setTodo(res.data)
     })
     .catch((error) => console.log(error));
   }, [])
   const valueSubmit = (id) => {
-    axios.patch(`https://todoandcalendar.herokuapp.com/api/v1/plans/${id}`, 
-    {
-      data: {
-        title: plan.title,
-        place: plan.place,
-        startDate: plan.startDate,
-        startTime: plan.startTime,
-        endDate: plan.endDate,
-        endTime: plan.endTime,
-        folder_id: plan.folder_id, 
-        memo: memo1,
-        user_id: auth.id
-      },
+    axios.patch(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`, {
+      data: {content: todo.content, folder_id: todo.folder_id, memo: memo1, user_id :auth.id},
     },{
       headers: {
         Authorization: token
@@ -56,6 +45,5 @@ const styles = StyleSheet.create({
     color: "#00bfff",
     fontSize: 16,
     fontWeight: "bold",
-  
   }
 });
