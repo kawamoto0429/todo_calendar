@@ -2,12 +2,13 @@ import {Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React, {useState, useEffect, useContext} from 'react'
 import { valueContext } from '../../context/Context'
 import axios from "axios"
+import { heroku } from '../../customHooks/Heroku'
 
 export default function TodoEditButton({id}) {
   const {auth, memo1, token} = useContext(valueContext)
   const [todo, setTodo] = useState([])
   useEffect(()=>{
-    axios.get(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`, {
+    axios.get(`${heroku}/api/v1/todoes/${id}`, {
       headers: {
         Authorization: token
       },

@@ -4,6 +4,7 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import axios from 'axios'
 import { valueContext } from '../../context/Context';
 import { PlanItem } from '../../components/plans/PlanItem';
+import { heroku } from '../../customHooks/Heroku';
 
 export default function Calendario({ navigation }) {
   const {auth, token, onOff} = useContext(valueContext)
@@ -24,7 +25,7 @@ export default function Calendario({ navigation }) {
   // }, []);
   useEffect(()=>{
     console.log(date)
-    axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans/find", {
+    axios.get(`${heroku}/api/v1/plans/find`, {
       params: {
         date: date,
         user_id: auth.id

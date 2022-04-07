@@ -7,6 +7,7 @@ import moment from 'moment';
 import { valueContext } from '../../context/Context';
 import ErrorMessages from '../../components/ErrorMessages';
 import { planContext } from '../../context/PlanCreate';
+import { heroku } from '../../customHooks/Heroku';
 
 export default function PlanCreateScreen() {
   const {auth, token} = useContext(valueContext)
@@ -14,7 +15,7 @@ export default function PlanCreateScreen() {
   const [folders, setFolders] = useState([])
 
   useEffect(()=>{
-    axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders/plan", {
+    axios.get(`${heroku}/api/v1/folders/plan`, {
       params:{
         user_id: auth.id
       },

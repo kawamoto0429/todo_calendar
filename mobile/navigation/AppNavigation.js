@@ -8,7 +8,7 @@ import { loadingContext } from '../context/LoadingContext';
 
 const AppNavigation = () => {
   const {auth} = useContext(valueContext);
-  const {loading, setLoading} = useContext(loadingContext)
+  const {loading} = useContext(loadingContext)
   return (
     <NavigationContainer>
         {auth?(

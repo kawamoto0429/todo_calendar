@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { valueContext } from './Context'
 import axios from 'axios'
+import { heroku } from '../customHooks/Heroku';
 export const folderContext = React.createContext();
 
 export default function FolderCreate(props) {
@@ -10,7 +11,7 @@ export default function FolderCreate(props) {
   const [error, setError] = useState([])
   const valueSubmit = (navigation) => {
     axios
-      .post("https://todoandcalendar.herokuapp.com/api/v1/folders", {
+      .post(`${heroku}/api/v1/folders`, {
         data: {name: folder, format: format, user_id: auth.id},
       }, {
         headers: {

@@ -2,6 +2,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFe
 import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import { valueContext } from '../../context/Context';
+import { heroku } from '../../customHooks/Heroku';
 
 export default function AuthScreen({navigation}) {
   const {saveItem, loadItem} = useContext(valueContext);
@@ -11,7 +12,7 @@ export default function AuthScreen({navigation}) {
   const valueSubmit = () => {
     console.log(email)
     console.log(password)
-    axios.post("https://todoandcalendar.herokuapp.com/api/v1/loginIn", {
+    axios.post(`${heroku}/api/v1/loginIn`, {
       user: {email: email, password: password}
     })
     .then((res)=>{

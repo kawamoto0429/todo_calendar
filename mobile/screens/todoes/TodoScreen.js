@@ -5,11 +5,12 @@ import Swipeout from 'react-native-swipeout';
 import axios from 'axios';
 import { DeleteButton } from '../../components/DeleteButton';
 import Loading from '../../components/Loading';
+import { heroku } from '../../customHooks/Heroku';
 
 const TodoScreen = ({ navigation }) => {
   const {folders, auth, onOff,setOnOff, token, apiLoad} = useContext(valueContext)
   const deleteClick = (id) => {
-    axios.delete(`https://todoandcalendar.herokuapp.com/api/v1/folders/${id}`,{
+    axios.delete(`${heroku}/api/v1/folders/${id}`,{
       params: {
         user_id: auth.id
       },

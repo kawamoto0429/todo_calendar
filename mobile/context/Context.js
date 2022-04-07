@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { heroku } from '../customHooks/Heroku';
 export const valueContext = React.createContext();
 
 export function Context(props) {
@@ -15,7 +16,7 @@ export function Context(props) {
   useEffect(()=>{
     setApiLoad(true)
     if (auth){
-      axios.get("https://todoandcalendar.herokuapp.com/api/v1/folders",
+      axios.get(`${heroku}/api/v1/folders`,
       {
         headers: {
           Authorization: token
@@ -26,7 +27,6 @@ export function Context(props) {
       })
       .then((res) => {
         if (res.data != "error"){
-          console.log(res.data)
           setFolders((prev)=>res.data);
           setApiLoad(false)
         }else{
@@ -41,7 +41,7 @@ export function Context(props) {
   useEffect(()=>{
     if (auth){
       setApiLoad(true)
-      axios.get("https://todoandcalendar.herokuapp.com/api/v1/todoes", 
+      axios.get(`${heroku}/api/v1/todoes`, 
       {
         headers: {
           Authorization: token
@@ -52,7 +52,6 @@ export function Context(props) {
       })
       .then((res) => {
         if (res.data != "error"){
-          console.log(res.data)
           setTodoes((prev)=>res.data);
           setApiLoad(false)
         }else{
@@ -65,7 +64,7 @@ export function Context(props) {
   useEffect(()=>{
     setApiLoad(true)
     if (auth){
-      axios.get("https://todoandcalendar.herokuapp.com/api/v1/plans",
+      axios.get(`${heroku}/api/v1/plans`,
       {
         headers: {
           Authorization: token
@@ -76,7 +75,6 @@ export function Context(props) {
       })
       .then((res) => {
         if (res.data != "error"){
-          console.log(res.data)
           setPlans((prev)=>res.data);
           setApiLoad(false)
         }else{
@@ -85,12 +83,12 @@ export function Context(props) {
         }
       });
     }
-  },[auth])
+  },[onOff, auth])
   useEffect(()=>{
     loadItem()
   }, [])
   const deleteClick = (id) => {
-    axios.delete(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}`,
+    axios.delete(`${heroku}/api/v1/todoes/${id}`,
       {
         headers: {
           Authorization: token
@@ -107,7 +105,7 @@ export function Context(props) {
 
   const complete = (id) => {
     axios
-    .get(`https://todoandcalendar.herokuapp.com/api/v1/todoes/${id}/complete`, {
+    .get(`${heroku}/api/v1/todoes/${id}/complete`, {
       headers: {
         Authorization: token
       }
@@ -126,7 +124,6 @@ export function Context(props) {
       await AsyncStorage.setItem("user", todoString);
       const tokenString = JSON.stringify(data.jwt)
       await AsyncStorage.setItem("token", tokenString);
-      console.log("ok")
     } catch (e) {
       console.log(e)
     }
@@ -135,8 +132,6 @@ export function Context(props) {
     const item = await AsyncStorage.getItem("user");
     const apitoken = await AsyncStorage.getItem("token");
     if (item !== null){
-      console.log(JSON.parse(apitoken))
-      console.log(JSON.parse(item))
       setToken(JSON.parse(apitoken))
       setAuth(JSON.parse(item))
     }else{

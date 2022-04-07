@@ -3,6 +3,7 @@ import React, {useState, useContext} from 'react'
 import axios from 'axios';
 import { valueContext } from '../../context/Context';
 import ErrorMessages from '../../components/ErrorMessages';
+import { heroku } from '../../customHooks/Heroku';
 
 export default function UserCreateScreen() {
   const {saveItem, loadItem} = useContext(valueContext);
@@ -11,7 +12,7 @@ export default function UserCreateScreen() {
   const [password_confirmation, setPassword_confirmation] = useState("")
   const [error, setError] = useState([])
   const valueSubmit = () => {
-    axios.post(`https://todoandcalendar.herokuapp.com/api/v1/users`, {
+    axios.post(`${heroku}/api/v1/users`, {
       user: {email: email, password: password, password_confirmation: password_confirmation}
     },
     { withCredentials: true }

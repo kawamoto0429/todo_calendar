@@ -1,6 +1,7 @@
 import React, {useState, useContext} from 'react'
 import { valueContext } from './Context'
 import axios from 'axios'
+import { heroku } from '../customHooks/Heroku';
 export const planContext = React.createContext();
 
 export default function PlanCreate(props) {
@@ -20,7 +21,7 @@ export default function PlanCreate(props) {
   const [endTimeLook, setEndTimelook] = useState('00:00')
   const valueSubmit = (navigation) => {
     axios
-      .post("https://todoandcalendar.herokuapp.com/api/v1/plans", 
+      .post(`${heroku}/api/v1/plans`, 
       {
         data: {
           title: title,

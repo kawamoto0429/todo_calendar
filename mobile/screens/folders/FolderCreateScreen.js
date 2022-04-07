@@ -2,16 +2,15 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, KeyboardAvoidingVi
 import React, {useState, useEffect, useContext} from 'react'
 import RNPickerSelect from 'react-native-picker-select';
 import axios from 'axios'
-import { valueContext } from '../../context/Context';
 import ErrorMessages from '../../components/ErrorMessages';
 import { folderContext } from '../../context/FolderCreate';
+import { heroku } from '../../customHooks/Heroku';
 
-export default function FolderCreateScreen({ navigation }) {
-  // const {onOff, setOnOff, auth} = useContext(valueContext)
+export default function FolderCreateScreen() {
   const {folder, setFolder, setFormat, error, setError} = useContext(folderContext)
   const [formats, setFormats] = useState([])
   useEffect(()=>{
-    axios.get("https://todoandcalendar.herokuapp.com/api/v1/formats/index")
+    axios.get(`${heroku}/api/v1/formats/index`)
     .then((res)=>{
       setFormats(res.data)
     })
